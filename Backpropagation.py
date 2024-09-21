@@ -4,6 +4,9 @@ import numpy as np
 # dLoss_dZ = 2*(Z - target)
 
 # Z = z1 + z2
+#activation = RELU
+    #if z > 0 : then z
+    #else : then 0
 
 # dZ_dz1 = 1
 # dZ_dz2 = 1
@@ -23,10 +26,22 @@ import numpy as np
 # w21 = w21 - lr * grad(w21)
 # w22 = w22 - lr * grad(w22)
 
+
+def activate(z):
+    if z > 0:
+        return z
+    else:
+        return 0  
+
 def forward_pass(x1 , x2 , target , w11 , w12 , w21 , w22 ):
     z1 = w11*x1 + w12 * x2
+    z1 = activate(z1) + 0.001
+    
     z2 = w21*x1 + w22 * x2
+    z2 = activate(z2) + 0.001
+    
     z = z1 + z2
+    
     loss = np.mean((z - target)**2)
     return loss , z
 
@@ -76,4 +91,4 @@ def fit(x1 , x2 , target , lr , epochs):
         print(f"For Epoch: {epoch} Loss:{loss}")
         w11, w12, w21, w22 = backward_pass(x1 , x2 , target , w11 , w12 , w21 , w22 , z , lr)
 
-fit(10 , 10 , 100 , 0.00001 , 10)
+fit(11 , 29 , 69, 0.0001 , 15)
